@@ -64,15 +64,15 @@ pipeline {
                     docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
                         docker.image("${dockerImage}").push('latest')
                     }
-                    env.dockerImage = "${REPO_NAME}:${BUILD_NUMBER}"
-                    sh "echo ${env.dockerImage}"
+                    dockerImage = "${REPO_NAME}:${BUILD_NUMBER}"
+                    sh "echo ${dockerImage}"
                 }
             }
         }
         stage('Update Deployment YAML') {
             steps {
                 script {
-                    sh "sed -i 's|<image_placeholder>|${env.dockerImage}|g' deployment.yaml"
+                    sh "sed -i 's|<image_placeholder>|${dockerImage}|g' deployment.yaml"
                     sh "cat deployment.yaml"
                 }
             }
