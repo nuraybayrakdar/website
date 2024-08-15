@@ -31,8 +31,8 @@ pipeline {
         stage('Docker Image Build') {
             steps {
                 script {
-                    docker.build("${REPO_NAME}:${BUILD_NUMBER}")
-                    dockerImage = "${REPO_NAME}:${BUILD_NUMBER}"
+                    docker.build("${REPO_NAME}:latest")
+                    dockerImage = "${REPO_NAME}:latest"
                 }
             }
         }
@@ -64,7 +64,7 @@ pipeline {
                     docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
                         docker.image("${dockerImage}").push('latest')
                     }
-                    dockerImage = "${REPO_NAME}:${BUILD_NUMBER}"
+                    dockerImage = "${REPO_NAME}:latest"
                     sh "echo ${dockerImage}"
                 }
             }
