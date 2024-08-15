@@ -74,6 +74,8 @@ pipeline {
                 script {
                     sh "sed -i 's|<image_placeholder>|${dockerImage}|g' deployment.yaml"
                     sh "cat deployment.yaml"
+                    sh "echo image_placeholder"
+
                 }
             }
         }
