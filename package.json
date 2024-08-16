@@ -10,9 +10,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-
   "dependencies": {
+    "http-server": "^14.1.1",
     "semver": "^7.5.2"
   }
 }
-
