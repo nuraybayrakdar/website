@@ -1,4 +1,3 @@
-# Dockerfile
 FROM ubuntu:20.04
 
 WORKDIR /app
@@ -18,7 +17,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
 
 # Filebeat'i yüklemek için Elastic GPG anahtarını ve kaynak listesini ekleyin
 RUN curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add - \
-    && echo "deb https://artifacts.elastic.co/downloads/beats/filebeat filebeat-7.6.2 amd64" | tee -a /etc/apt/sources.list.d/elastic-beats.list \
+    && echo "deb https://artifacts.elastic.co/packages/8.x/apt stable main" | tee -a /etc/apt/sources.list.d/elastic-8.x.list \
     && apt-get update && apt-get install -y filebeat
 
 # Node.js uygulamanızı ve Filebeat yapılandırmanızı ekleyin
