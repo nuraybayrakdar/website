@@ -1,16 +1,16 @@
-FROM node:16-alpine
-
-RUN apk add --no-cache curl bash
+FROM ubuntu:20.04
 
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install
+RUN apt-get update && apt-get install -y \
+    curl \
+    dpkg \
+    && npm install
 
 COPY . ./
 
 RUN curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-oss-7.6.2-amd64.deb && \
-    apk add --no-cache dpkg && \
     dpkg -i filebeat-oss-7.6.2-amd64.deb
 
 ADD filebeat.yml /etc/filebeat/filebeat.yml
