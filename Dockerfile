@@ -1,3 +1,4 @@
+# Dockerfile
 FROM ubuntu:20.04
 
 WORKDIR /app
@@ -30,7 +31,7 @@ ADD filebeat.yml /etc/filebeat/filebeat.yml
 # Filebeat'i çalıştırmak için uygun dosya izinlerini ayarlayın
 RUN chmod 644 /etc/filebeat/filebeat.yml
 
-# Uygulamanızı ve Filebeat'i başlatmak için bir giriş noktası betiği ekleyin
+# Giriş noktası betiğini ekleyin ve izinlerini ayarlayın
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
