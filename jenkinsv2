@@ -69,6 +69,26 @@ pipeline {
                 }
             }
         }
+        stage('Update Deployment YAML') {
+            steps {
+                script {
+                    sh "sed -i 's|<image_placeholder>|${dockerImage}|g' deployment.yaml"
+                    sh "cat deployment.yaml"
+                }
+            }
+        }
+
+        stage('Deploy K8S') {
+            steps {
+                script {
+                    withCredentials([file(credentialsId: K8S_ID, variable: 'KUBECONFIG')]) {
+                        sh 'kubectl config view --minify'
+                        sh 'kubectl cluster-info'
+                        sh 'kubectl apply -f deployment.yaml'
+                    }
+                }
+            }
+        }
         stage('Trigger CD Pipeline') {
             steps {
                build job: 'app-cd', parameters: [string(name: 'dockerImage', value: dockerImage)]
